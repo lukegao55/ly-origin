@@ -6,19 +6,27 @@
     <title>CrazyFam Privacy Policy</title>
     <style>
       :root {
-        color-scheme: dark;
-        --bg: #111318;
-        --card: #1d232c;
-        --text: #f8f5ef;
-        --muted: #b9c0c8;
-        --accent: #ff5a4f;
-        --line: rgba(255, 255, 255, 0.12);
+        color-scheme: light;
+        --sky: #80ccff;
+        --sakura: #ffcce6;
+        --lemon: #fff280;
+        --mint: #80f2b3;
+        --lavender: #d9bfff;
+        --coral: #ff9980;
+        --ink: #202124;
+        --paper: #fffdf8;
+        --muted: #45484f;
+        --line: rgba(32, 33, 36, 0.24);
       }
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        background: linear-gradient(145deg, rgba(255, 90, 79, 0.14), transparent 34rem), var(--bg);
-        color: var(--text);
+        background:
+          linear-gradient(135deg, rgba(255, 204, 230, 0.95) 0 12%, transparent 12% 100%),
+          linear-gradient(160deg, transparent 0 58%, rgba(128, 242, 179, 0.75) 58% 72%, transparent 72% 100%),
+          linear-gradient(25deg, transparent 0 68%, rgba(255, 242, 128, 0.75) 68% 82%, transparent 82% 100%),
+          var(--sky);
+        color: var(--ink);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         line-height: 1.65;
       }
@@ -27,19 +35,31 @@
         margin: 0 auto;
         padding: 56px 0;
       }
+      header {
+        padding-bottom: 8px;
+      }
       .eyebrow {
-        color: var(--accent);
+        display: inline-block;
+        color: var(--ink);
+        background: var(--lemon);
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        box-shadow: 0 3px 0 rgba(32, 33, 36, 0.24);
         font-size: 13px;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 0.08em;
+        padding: 5px 12px;
         text-transform: uppercase;
       }
       h1 {
-        margin: 8px 0 10px;
+        color: white;
+        margin: 12px 0 10px;
         font-size: clamp(38px, 7vw, 68px);
         line-height: 1.02;
+        text-shadow: 0 3px 0 rgba(32, 33, 36, 0.45);
       }
       h2 {
+        color: var(--ink);
         margin: 36px 0 12px;
         font-size: 25px;
         line-height: 1.2;
@@ -52,24 +72,40 @@
         margin: 12px 0 0;
         padding-left: 24px;
       }
-      a { color: var(--text); }
+      a {
+        color: var(--ink);
+        font-weight: 800;
+      }
       .card {
-        background: color-mix(in srgb, var(--card) 92%, black);
-        border: 1px solid var(--line);
+        background: rgba(255, 253, 248, 0.94);
+        border: 3px solid var(--ink);
         border-radius: 18px;
+        box-shadow: 0 8px 0 rgba(32, 33, 36, 0.18);
         margin-top: 28px;
         padding: 26px;
       }
+      .card p { color: var(--ink); }
       .section {
-        border-top: 1px solid var(--line);
+        background: rgba(255, 253, 248, 0.58);
+        border-top: 3px solid var(--line);
         margin-top: 34px;
-        padding-top: 8px;
+        padding: 8px 18px 0;
       }
-      .updated { color: var(--muted); margin: 0; }
-      .language-block { margin-top: 56px; }
+      .updated {
+        color: rgba(32, 33, 36, 0.72);
+        font-weight: 700;
+        margin: 0;
+      }
+      .language-block {
+        border-color: rgba(32, 33, 36, 0.42);
+        margin-top: 56px;
+      }
+      .language-block .eyebrow { background: var(--sakura); }
+      .language-block h1 { text-shadow: 0 3px 0 rgba(32, 33, 36, 0.42); }
       @media (max-width: 560px) {
         main { padding: 40px 0; }
         .card { padding: 20px; }
+        .section { padding-left: 12px; padding-right: 12px; }
         p, li { font-size: 16px; }
       }
     </style>
