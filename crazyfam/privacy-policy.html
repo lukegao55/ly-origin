@@ -12,7 +12,7 @@
         --text: #f8f5ef;
         --muted: #b9c0c8;
         --accent: #ff5a4f;
-        --line: rgba(255, 255, 255, 0.1);
+        --line: rgba(255, 255, 255, 0.12);
       }
       * { box-sizing: border-box; }
       body {
@@ -48,11 +48,16 @@
         color: var(--muted);
         font-size: 17px;
       }
+      ul {
+        margin: 12px 0 0;
+        padding-left: 24px;
+      }
       a { color: var(--text); }
       .card {
         background: color-mix(in srgb, var(--card) 92%, black);
         border: 1px solid var(--line);
         border-radius: 18px;
+        margin-top: 28px;
         padding: 26px;
       }
       .section {
@@ -61,6 +66,12 @@
         padding-top: 8px;
       }
       .updated { color: var(--muted); margin: 0; }
+      .language-block { margin-top: 56px; }
+      @media (max-width: 560px) {
+        main { padding: 40px 0; }
+        .card { padding: 20px; }
+        p, li { font-size: 16px; }
+      }
     </style>
   </head>
   <body>
@@ -73,49 +84,59 @@
 
       <section class="card">
         <p>
-          CrazyFam (“the app”) is a casual party game. We respect your privacy and keep the app simple: the app does not require an account and does not intentionally collect personal information.
+          CrazyFam ("the app") is a casual party game. We respect your privacy and keep the app simple: the app does not require an account, does not show third-party ads, and does not intentionally collect personal information from users.
         </p>
       </section>
 
       <section class="section">
         <h2>Information We Collect</h2>
         <p>
-          CrazyFam does not collect names, email addresses, phone numbers, account credentials, contacts, photos, precise location, or personal messages. Game settings, language preferences, sound settings, unlocked content, and local gameplay statistics may be stored on your device.
+          CrazyFam does not collect names, email addresses, phone numbers, account credentials, contacts, photos, precise location, personal messages, or other information that directly identifies you.
+        </p>
+        <p>
+          The app may store gameplay-related information locally on your device, such as language preferences, sound settings, selected themes, unlocked content, and local gameplay statistics. This information is used only to provide and improve the in-app experience on your device.
         </p>
       </section>
 
       <section class="section">
         <h2>Local Data</h2>
         <p>
-          The app may save local data needed for gameplay, such as preferences, selected themes, voice settings, and game statistics. This data stays on your device unless you delete the app or clear related app data through your device settings.
+          Local data stays on your device and is not sent to our servers. You can remove this data by deleting the app or clearing related app data through your device settings, where supported by the operating system.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Device Permissions</h2>
+        <p>
+          CrazyFam does not request access to sensitive device data such as contacts, photos, precise location, camera, or microphone unless a future feature clearly requires it. If a future version adds a permission-based feature, the app will request permission through the operating system before using that feature.
         </p>
       </section>
 
       <section class="section">
         <h2>Purchases</h2>
         <p>
-          If the app offers in-app purchases, purchases are processed by Apple through the App Store. We do not receive or store your payment card information.
+          If the app offers in-app purchases, purchases are processed by Apple through the App Store. We do not receive or store your payment card information. Apple may process purchase, refund, subscription, tax, fraud prevention, and billing data according to Apple's own policies.
         </p>
       </section>
 
       <section class="section">
         <h2>Third-Party Services</h2>
         <p>
-          CrazyFam uses Apple system services such as App Store purchases and rating prompts. We do not add third-party advertising SDKs or third-party analytics SDKs.
+          CrazyFam may use Apple system services such as App Store purchases, restore purchases, and rating prompts. We do not add third-party advertising SDKs or third-party analytics SDKs.
         </p>
       </section>
 
       <section class="section">
-        <h2>Children’s Privacy</h2>
+        <h2>Children's Privacy</h2>
         <p>
-          CrazyFam is not designed to knowingly collect personal information from children. If you believe a child has provided personal information through the app, please contact us.
+          CrazyFam is not designed to knowingly collect personal information from children. If you believe a child has provided personal information through the app, please contact us so we can review and address the issue.
         </p>
       </section>
 
       <section class="section">
-        <h2>Changes</h2>
+        <h2>Changes to This Policy</h2>
         <p>
-          We may update this policy when the app changes. Any updates will be posted on this page with a new “Last updated” date.
+          We may update this policy when the app changes or when legal, technical, or operational requirements change. Updates will be posted on this page with a new "Last updated" date.
         </p>
       </section>
 
@@ -126,24 +147,59 @@
         </p>
       </section>
 
-      <section class="section" lang="zh-Hans">
+      <section class="section language-block" lang="zh-Hans">
+        <div class="eyebrow">简体中文</div>
         <h1>隐私政策</h1>
         <p class="updated">更新日期：2026 年 6 月 13 日</p>
 
+        <section class="card">
+          <p>
+            CrazyFam（以下简称“本 App”）是一款休闲聚会游戏。我们尊重你的隐私，并尽量保持产品简单：本 App 不要求注册账号，不展示第三方广告，也不会主动收集可识别个人身份的信息。
+          </p>
+        </section>
+
         <h2>我们收集的信息</h2>
-        <p>CrazyFam 不要求注册账号，也不会主动收集姓名、邮箱、手机号、账号凭据、通讯录、照片、精确位置或个人消息。游戏设置、语言偏好、音效设置、已解锁内容和本地游戏统计可能会保存在你的设备本地。</p>
+        <p>
+          CrazyFam 不会收集姓名、邮箱地址、手机号码、账号凭据、通讯录、照片、精确位置、个人消息，或其他可直接识别你身份的信息。
+        </p>
+        <p>
+          本 App 可能会在你的设备本地保存与游戏体验相关的数据，例如语言偏好、音效设置、已选择的主题、已解锁内容和本地游戏统计。这些信息仅用于在你的设备上提供和改善 App 内体验。
+        </p>
 
         <h2>本地数据</h2>
-        <p>App 可能会保存用于游戏体验的本地数据，例如偏好设置、主题选择、语音设置和游戏统计。这些数据会留在你的设备上，除非你删除 App 或通过设备设置清除相关数据。</p>
+        <p>
+          本地数据会保留在你的设备上，不会发送到我们的服务器。你可以通过删除 App，或在操作系统支持的情况下通过设备设置清除相关 App 数据来移除这些数据。
+        </p>
+
+        <h2>设备权限</h2>
+        <p>
+          CrazyFam 不会请求访问通讯录、照片、精确位置、相机、麦克风等敏感设备数据，除非未来某项功能明确需要。如果后续版本新增需要权限的功能，App 会在使用该功能前通过操作系统请求你的授权。
+        </p>
 
         <h2>购买</h2>
-        <p>如果 App 提供应用内购买，购买流程由 Apple 通过 App Store 处理。我们不会接收或保存你的银行卡信息。</p>
+        <p>
+          如果本 App 提供应用内购买，购买流程将由 Apple 通过 App Store 处理。我们不会接收或保存你的银行卡信息。Apple 可能会根据其自身政策处理购买、退款、订阅、税务、反欺诈和账单相关数据。
+        </p>
 
         <h2>第三方服务</h2>
-        <p>CrazyFam 会使用 Apple 系统服务，例如 App Store 购买和评分提示。我们没有接入第三方广告 SDK，也没有接入第三方分析 SDK。</p>
+        <p>
+          CrazyFam 可能会使用 Apple 系统服务，例如 App Store 购买、恢复购买和评分提示。我们没有接入第三方广告 SDK，也没有接入第三方分析 SDK。
+        </p>
+
+        <h2>儿童隐私</h2>
+        <p>
+          CrazyFam 不会有意收集儿童的个人信息。如果你认为儿童通过本 App 提供了个人信息，请联系我们，我们会进行核查并处理。
+        </p>
+
+        <h2>政策变更</h2>
+        <p>
+          当 App 功能变化，或法律、技术、运营要求发生变化时，我们可能会更新本隐私政策。任何更新都会发布在本页面，并更新“更新日期”。
+        </p>
 
         <h2>联系我们</h2>
-        <p>如果你对本隐私政策有任何问题，可以通过 <a href="mailto:lukegao55@gmail.com">lukegao55@gmail.com</a> 联系我们。</p>
+        <p>
+          如果你对本隐私政策有任何问题，可以通过 <a href="mailto:lukegao55@gmail.com">lukegao55@gmail.com</a> 联系我们。
+        </p>
       </section>
     </main>
   </body>
