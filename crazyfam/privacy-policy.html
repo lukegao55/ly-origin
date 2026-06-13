@@ -16,7 +16,7 @@
         --ink: #202124;
         --paper: #fffdf8;
         --muted: #45484f;
-        --line: rgba(32, 33, 36, 0.24);
+        --line: rgba(32, 33, 36, 0.18);
       }
       * { box-sizing: border-box; }
       body {
@@ -59,15 +59,29 @@
         text-shadow: 0 3px 0 rgba(32, 33, 36, 0.45);
       }
       h2 {
+        align-items: center;
         color: var(--ink);
-        margin: 36px 0 12px;
+        display: flex;
+        gap: 10px;
+        margin: 38px 0 12px;
         font-size: 25px;
         line-height: 1.2;
+      }
+      h2::before {
+        background: var(--coral);
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        box-shadow: 0 2px 0 rgba(32, 33, 36, 0.18);
+        content: "";
+        flex: 0 0 auto;
+        height: 16px;
+        width: 16px;
       }
       p, li {
         color: var(--muted);
         font-size: 17px;
       }
+      p { margin: 0 0 14px; }
       ul {
         margin: 12px 0 0;
         padding-left: 24px;
@@ -84,28 +98,44 @@
         margin-top: 28px;
         padding: 26px;
       }
-      .card p { color: var(--ink); }
-      .section {
-        background: rgba(255, 253, 248, 0.58);
-        border-top: 3px solid var(--line);
-        margin-top: 34px;
-        padding: 8px 18px 0;
+      .card p {
+        color: var(--ink);
+        margin: 0;
       }
+      .section {
+        margin-top: 28px;
+        padding: 0 6px;
+      }
+      .section + .section {
+        border-top: 1px dashed var(--line);
+        padding-top: 8px;
+      }
+      .section:nth-of-type(3n + 1) h2::before { background: var(--coral); }
+      .section:nth-of-type(3n + 2) h2::before { background: var(--mint); }
+      .section:nth-of-type(3n) h2::before { background: var(--lavender); }
       .updated {
         color: rgba(32, 33, 36, 0.72);
         font-weight: 700;
         margin: 0;
       }
       .language-block {
-        border-color: rgba(32, 33, 36, 0.42);
-        margin-top: 56px;
+        background: rgba(255, 253, 248, 0.42);
+        border: 3px solid rgba(32, 33, 36, 0.28);
+        border-radius: 22px;
+        box-shadow: 0 8px 0 rgba(32, 33, 36, 0.12);
+        margin-top: 64px;
+        padding: 28px 28px 18px;
       }
       .language-block .eyebrow { background: var(--sakura); }
       .language-block h1 { text-shadow: 0 3px 0 rgba(32, 33, 36, 0.42); }
+      .language-block h2:nth-of-type(3n + 1)::before { background: var(--sakura); }
+      .language-block h2:nth-of-type(3n + 2)::before { background: var(--mint); }
+      .language-block h2:nth-of-type(3n)::before { background: var(--lemon); }
       @media (max-width: 560px) {
         main { padding: 40px 0; }
         .card { padding: 20px; }
-        .section { padding-left: 12px; padding-right: 12px; }
+        .section { padding-left: 0; padding-right: 0; }
+        .language-block { padding: 22px 18px 12px; }
         p, li { font-size: 16px; }
       }
     </style>
@@ -183,7 +213,7 @@
         </p>
       </section>
 
-      <section class="section language-block" lang="zh-Hans">
+      <section class="language-block" lang="zh-Hans">
         <div class="eyebrow">简体中文</div>
         <h1>隐私政策</h1>
         <p class="updated">更新日期：2026 年 6 月 13 日</p>
