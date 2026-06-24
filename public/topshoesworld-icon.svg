@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="TopShoesWorld icon">
+  <rect width="1024" height="1024" rx="220" fill="#002b49"/>
+  <path d="M214 586c72 0 122-13 168-51l52-43c38-31 75-44 126-44h116c69 0 125 56 125 125 0 18-14 32-32 32H243c-16 0-29-8-29-19Z" fill="#fff"/>
+  <path d="M386 536c-42 35-91 50-158 50h-14c0 80 65 145 145 145h418c54 0 98-44 98-98v-34c-24 26-58 42-96 42H243c-16 0-29-8-29-19v-36h14c67 0 116-15 158-50Z" fill="#2aa4cf" opacity=".9"/>
+  <path d="M356 353c0-33 27-60 60-60h179c30 0 54 24 54 54v101h-89c-51 0-88 13-126 44l-78 64V353Z" fill="#e8f0f8"/>
+  <path d="M434 367h128M434 431h128" stroke="#002b49" stroke-width="34" stroke-linecap="round"/>
+  <path d="M214 586h565" stroke="#002b49" stroke-width="38" stroke-linecap="round" opacity=".18"/>
+</svg>

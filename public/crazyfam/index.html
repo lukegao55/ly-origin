@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CrazyFam</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --sky: #80ccff;
+        --sakura: #ffcce6;
+        --lemon: #fff280;
+        --mint: #80f2b3;
+        --lavender: #d9bfff;
+        --coral: #ff9980;
+        --ink: #202124;
+        --paper: #fffdf8;
+        --muted: #45484f;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background:
+          linear-gradient(135deg, rgba(255, 204, 230, 0.95) 0 12%, transparent 12% 100%),
+          linear-gradient(160deg, transparent 0 58%, rgba(128, 242, 179, 0.75) 58% 72%, transparent 72% 100%),
+          linear-gradient(25deg, transparent 0 68%, rgba(255, 242, 128, 0.75) 68% 82%, transparent 82% 100%),
+          var(--sky);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      main {
+        width: min(960px, calc(100% - 32px));
+        min-height: 100svh;
+        margin: 0 auto;
+        padding: 56px 0;
+        display: grid;
+        align-content: center;
+      }
+      .eyebrow {
+        display: inline-block;
+        width: max-content;
+        color: var(--ink);
+        background: var(--lemon);
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        box-shadow: 0 3px 0 rgba(32, 33, 36, 0.24);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        padding: 5px 12px;
+        text-transform: uppercase;
+      }
+      .card {
+        background: rgba(255, 253, 248, 0.94);
+        border: 3px solid var(--ink);
+        border-radius: 24px;
+        box-shadow: 0 10px 0 rgba(32, 33, 36, 0.18);
+        padding: clamp(26px, 5vw, 56px);
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 132px minmax(0, 1fr);
+        gap: clamp(24px, 5vw, 56px);
+        align-items: center;
+      }
+      img {
+        width: 132px;
+        height: 132px;
+        border: 3px solid var(--ink);
+        border-radius: 30px;
+        box-shadow: 0 8px 0 rgba(32, 33, 36, 0.18);
+      }
+      h1 {
+        color: var(--sky);
+        margin: 14px 0 12px;
+        font-size: clamp(48px, 8vw, 88px);
+        line-height: 0.96;
+        text-shadow: 0 3px 0 rgba(32, 33, 36, 0.45);
+      }
+      p {
+        max-width: 680px;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(17px, 2vw, 21px);
+        line-height: 1.7;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+      a {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 18px;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        color: var(--ink);
+        background: var(--sakura);
+        box-shadow: 0 3px 0 rgba(32, 33, 36, 0.2);
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+      a.secondary { background: var(--mint); }
+      @media (max-width: 640px) {
+        .hero { grid-template-columns: 1fr; }
+        img { width: 104px; height: 104px; border-radius: 24px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <div class="hero">
+          <img src="/crazyfam-icon.png" alt="CrazyFam icon" />
+          <div>
+            <div class="eyebrow">Party Game</div>
+            <h1>CrazyFam</h1>
+            <p>
+              翻牌、角色、惩罚卡和主题皮肤组成的 iOS 聚会游戏。适合朋友聚会、轻松破冰和制造一点点刚好的社交张力。
+            </p>
+            <div class="actions">
+              <a href="/crazyfam/privacy-policy.html">隐私条款</a>
+              <a class="secondary" href="/">返回领弈禾元</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

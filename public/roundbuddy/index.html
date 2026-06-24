@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RoundBuddy</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f1416;
+        --card: #1e272d;
+        --text: #f6f6f4;
+        --muted: #b6c0c2;
+        --accent: #ff3e4e;
+        --line: rgba(255, 255, 255, 0.1);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: linear-gradient(150deg, rgba(255, 62, 78, 0.12), transparent 32rem), var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      main {
+        width: min(960px, calc(100% - 32px));
+        min-height: 100svh;
+        margin: 0 auto;
+        padding: 56px 0;
+        display: grid;
+        align-content: center;
+      }
+      .card {
+        background: color-mix(in srgb, var(--card) 92%, black);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: clamp(26px, 5vw, 56px);
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 132px minmax(0, 1fr);
+        gap: clamp(24px, 5vw, 56px);
+        align-items: center;
+      }
+      img {
+        width: 132px;
+        height: 132px;
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+      }
+      .eyebrow {
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 8px 0 12px;
+        font-size: clamp(48px, 8vw, 88px);
+        line-height: 0.96;
+      }
+      p {
+        max-width: 680px;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(17px, 2vw, 21px);
+        line-height: 1.7;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+      a {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 18px;
+        border: 1px solid var(--accent);
+        border-radius: 999px;
+        color: var(--bg);
+        background: var(--accent);
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+      a.secondary {
+        border-color: var(--line);
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      @media (max-width: 640px) {
+        .hero { grid-template-columns: 1fr; }
+        img { width: 104px; height: 104px; border-radius: 24px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <div class="hero">
+          <img src="/roundbuddy-icon.png" alt="RoundBuddy icon" />
+          <div>
+            <div class="eyebrow">Training Companion</div>
+            <h1>RoundBuddy</h1>
+            <p>
+              面向沙袋训练和格斗基础练习的 iOS 训练伙伴，提供每日训练、组合动作、节奏提示和本地进度记录。
+            </p>
+            <div class="actions">
+              <a href="/roundbuddy/privacy-policy.html">隐私条款</a>
+              <a class="secondary" href="/">返回领弈禾元</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
