@@ -77,10 +77,46 @@
         color: var(--muted);
         margin: 0;
       }
+
+      .language-switcher {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+
+      .language-switcher button {
+        min-height: 36px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.05);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .language-switcher button[aria-pressed="true"] {
+        border-color: var(--accent);
+        color: #0f1416;
+        background: var(--accent);
+      }
+
+      .policy-lang[hidden] {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <main>
+      <div class="language-switcher" aria-label="Language switcher">
+        <button type="button" data-switch-lang="en">English</button>
+        <button type="button" data-switch-lang="zh">中文</button>
+      </div>
+
+      <div class="policy-lang" data-lang="en">
       <header>
         <div class="eyebrow">RoundBuddy / 拳伴</div>
         <h1>Privacy Policy</h1>
@@ -131,11 +167,12 @@
       <section class="section">
         <h2>Contact</h2>
         <p>
-          If you have questions about this privacy policy, contact us at <a href="mailto:lukegao55@gmail.com">lukegao55@gmail.com</a>.
+          If you have questions about this privacy policy, contact us at <a href="mailto:luke@ly-origin.com">luke@ly-origin.com</a>.
         </p>
       </section>
+      </div>
 
-      <section class="section" lang="zh-Hans">
+      <section class="policy-lang section" data-lang="zh" lang="zh-Hans" hidden>
         <h1>隐私政策</h1>
         <p class="updated">更新日期：2026 年 6 月 13 日</p>
 
@@ -149,8 +186,40 @@
         <p>拳伴会使用 Apple 系统能力，例如语音朗读和评分提示。我们没有接入第三方广告 SDK，也没有接入第三方分析 SDK。</p>
 
         <h2>联系我们</h2>
-        <p>如果你对本隐私政策有任何问题，可以通过 <a href="mailto:lukegao55@gmail.com">lukegao55@gmail.com</a> 联系我们。</p>
+        <p>如果你对本隐私政策有任何问题，可以通过 <a href="mailto:luke@ly-origin.com">luke@ly-origin.com</a> 联系我们。</p>
       </section>
     </main>
+    <script>
+      const buttons = document.querySelectorAll("[data-switch-lang]");
+      const blocks = document.querySelectorAll(".policy-lang");
+      const languageStorageKey = "ly-origin-language";
+      const params = new URLSearchParams(window.location.search);
+      const urlLanguage = params.get("lang");
+      const savedLanguage = window.localStorage.getItem(languageStorageKey);
+      const browserLanguage = navigator.language && navigator.language.toLowerCase().startsWith("zh") ? "zh" : "en";
+      const initialLanguage =
+        urlLanguage === "zh" || urlLanguage === "en"
+          ? urlLanguage
+          : savedLanguage === "zh" || savedLanguage === "en"
+            ? savedLanguage
+            : browserLanguage;
+
+      function setLanguage(language) {
+        document.documentElement.lang = language === "zh" ? "zh-Hans" : "en";
+        blocks.forEach((block) => {
+          block.hidden = block.dataset.lang !== language;
+        });
+        buttons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.switchLang === language));
+        });
+        window.localStorage.setItem(languageStorageKey, language);
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => setLanguage(button.dataset.switchLang));
+      });
+
+      setLanguage(initialLanguage);
+    </script>
   </body>
 </html>

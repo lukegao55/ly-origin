@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   siAlibabacloud,
   siAnthropic,
@@ -16,31 +16,33 @@ import {
 import './App.css'
 
 const email = 'luke@ly-origin.com'
+const languageStorageKey = 'ly-origin-language'
 
 const translations = {
   zh: {
     htmlLang: 'zh-CN',
     title: '领弈禾元',
     description:
-      '深圳领弈禾元科技有限公司专注 AI 软件开发、工作流搭建、数据与知识工程，帮助企业把 AI 能力落到业务流程里。',
+      '深圳领弈禾元科技有限公司用 AI 创造产品，并把 AI 方法带入更多行业场景，帮助业务完成 AI 化升级。',
     brand: '领弈禾元',
+    brandEn: 'LY ORIGIN',
     company: '深圳领弈禾元科技有限公司',
     navAria: '主导航',
     nav: [
       ['partners', '生态'],
       ['products', '产品'],
       ['services', '服务'],
-      ['delivery', '流程'],
+      ['team', '团队'],
       ['about', '联系'],
     ],
     langLabel: 'Switch language',
     langToggle: 'EN',
     cta: '预约咨询',
     secondaryCta: '查看产品结构',
-    heroSubtitle: '把 AI 能力落到业务流程里',
+    heroSubtitle: '以 AI 创造，让 AI 赋能',
     heroDesc:
-      '我们为不同需求提供 AI 化的帮助，从应用开发、内容生产到流程自动化，让想法更快变成可使用的系统。',
-    partnersHeading: '连接主流模型与云生态',
+      '我们是一家 AI first 的创造型公司，把 AI 作为产品、内容和运营的默认工作方式，并把验证过的方法带进更多行业。',
+    partnersHeading: '模型与云生态',
     partnersIntro:
       '面向实际业务场景接入模型、云服务、数据库和部署平台，让 AI 能力稳定进入企业系统。',
     partnerRows: [
@@ -77,10 +79,8 @@ const translations = {
         eyebrow: '聚会游戏',
         summary: 'AI 让疯狂一家人能更快生成和迭代聚会内容，从玩法想法快速变成可上线的游戏体验。',
         theme: 'crazyfam',
-        productUrl: '/crazyfam/index.html',
         appStoreUrl: 'https://apps.apple.com/us/app/crazyfam/id6754828243',
         privacyUrl: '/crazyfam/privacy-policy.html',
-        productCta: '进入产品网站',
         appStoreCta: '在 App Store 下载',
         privacyCta: '隐私条款',
       },
@@ -90,10 +90,8 @@ const translations = {
         eyebrow: '训练陪伴',
         summary: 'AI 让拳伴能更快把训练经验转化成可执行计划，降低内容设计和迭代成本。',
         theme: 'roundbuddy',
-        productUrl: '/roundbuddy/index.html',
         appStoreUrl: 'https://apps.apple.com/us/app/roundbuddy/id6779547962',
         privacyUrl: '/roundbuddy/privacy-policy.html',
-        productCta: '进入产品网站',
         appStoreCta: '在 App Store 下载',
         privacyCta: '隐私条款',
       },
@@ -108,63 +106,121 @@ const translations = {
       },
     ],
     servicesHeading: '服务能力',
-    servicesIntro: '围绕当前最有价值的 AI 场景，把模型能力、业务知识和运营动作组合成可持续使用的服务能力。',
+    servicesIntro: '从想法、内容、知识到运营动作，把 AI 变成团队每天都能使用的生产力。',
     services: [
-      ['AI Agent', '面向客服、销售、运营和内部协作设计可执行任务的智能体。'],
-      ['知识库与 RAG', '把文档、产品资料和业务经验变成可检索、可问答的 AI 知识系统。'],
-      ['AI 客服与销售助手', '自动处理咨询、线索跟进、FAQ、产品推荐和售前沟通。'],
-      ['AIGC 内容生产', '为商品、短视频、社媒、广告和品牌内容建立稳定生成流程。'],
-      ['AI 电商出海', '商品内容、询盘回复、买家沟通和多语言运营的 AI 化能力。'],
-      ['多模型接入', '按场景组合 ChatGPT、Gemini、Claude、DeepSeek、豆包等模型能力。'],
-      ['数据洞察助手', '把经营数据、用户反馈和业务记录转化成可追问的分析助手。'],
-      ['AI 运营自动化', '让 AI 参与日常运营动作，包括内容排期、客户触达和效果复盘。'],
+      {
+        title: 'Agent 工作流',
+        body: '让 AI 不只回答问题，而是能调用工具、处理任务、跟进结果，进入真实业务流程。',
+        signal: '执行',
+      },
+      {
+        title: '知识库与 RAG',
+        body: '把产品资料、业务文档和经验沉淀成可检索、可追问、可持续更新的知识系统。',
+        signal: '知识',
+      },
+      {
+        title: 'AIGC 内容工厂',
+        body: '为商品、社媒、广告、短视频和品牌内容建立稳定生成与审核流程。',
+        signal: '内容',
+      },
+      {
+        title: 'AI 客服与销售助手',
+        body: '自动处理咨询、FAQ、产品推荐、线索跟进和售前沟通。',
+        signal: '增长',
+      },
+      {
+        title: 'AI 电商出海',
+        body: '面向跨境业务生成商品内容、处理询盘、辅助买家沟通和多语言运营。',
+        signal: '出海',
+      },
+      {
+        title: '多模型编排',
+        body: '按场景组合 ChatGPT、Gemini、Claude、DeepSeek、豆包等模型能力。',
+        signal: '模型',
+      },
+      {
+        title: '数据洞察助手',
+        body: '把经营数据、用户反馈和业务记录变成可对话、可追问的分析入口。',
+        signal: '洞察',
+      },
+      {
+        title: '多模态资产生产',
+        body: '用 AI 生成图片、文案、脚本、页面素材和产品表达，提升创作效率。',
+        signal: '视觉',
+      },
+      {
+        title: '运营自动化',
+        body: '让 AI 参与内容排期、客户触达、效果复盘和日常运营动作。',
+        signal: '运营',
+      },
     ],
-    deliveryHeading: 'AI 能力落地路径',
-    deliveryIntro: '我们不是单纯接需求做系统，而是帮助你判断哪些场景值得 AI 化，并把能力沉淀成长期可运营的服务。',
-    deliverySteps: [
-      ['01', 'AI 场景识别', '找到最适合用 AI 提效的业务场景，区分真正有价值的机会和噱头。'],
-      ['02', '能力组合设计', '选择模型、知识库、工具调用和人工协作方式，形成可落地的 AI 服务方案。'],
-      ['03', '知识与流程接入', '把产品资料、业务规则、客户问题和运营动作接入 AI 能力链路。'],
-      ['04', '服务上线运营', '让 AI 进入真实业务触点，在咨询、内容、销售或运营场景中持续工作。'],
-      ['05', '效果复盘升级', '根据使用数据和反馈优化提示词、知识内容、工具链和自动化策略。'],
+    teamHeading: 'AI 员工团队',
+    teamIntro:
+      '我们是一家由 AI 员工驱动的公司。产品、增长、设计、工程和运营都由 AI 角色协同运作，人类负责方向判断，AI 负责持续创造、执行和迭代。',
+    teamMembers: [
+      {
+        name: 'Avery Chen',
+        role: '增长负责人',
+        label: 'Growth AI',
+        avatar: '/team/marketing-avatar.png',
+        summary: '用 AI 生成内容、分析渠道反馈和测试传播方向，让市场动作更快形成闭环。',
+      },
+      {
+        name: 'Maya Lin',
+        role: '产品经理',
+        label: 'Product AI',
+        avatar: '/team/pm-avatar.png',
+        summary: '用 AI 拆解需求、梳理用户路径和生成原型，把想法更快转成可验证的产品方案。',
+      },
+      {
+        name: 'Jordan Park',
+        role: '系统工程师',
+        label: 'Build AI',
+        avatar: '/team/engineering-avatar.png',
+        summary: '把模型、知识库、工具调用和自动化流程接入真实产品，让 AI 能进入业务链路。',
+      },
+      {
+        name: 'Sofia Reyes',
+        role: '体验设计师',
+        label: 'Design AI',
+        avatar: '/team/design-avatar.png',
+        summary: '用 AIGC 生成视觉方向、界面资产和表达方案，让产品体验更快接近可上线状态。',
+      },
+      {
+        name: 'Marcus Reed',
+        role: '运营自动化负责人',
+        label: 'Ops AI',
+        avatar: '/team/operations-avatar.png',
+        summary: '把客服、内容排期、数据复盘和线索跟进交给 AI 协作，提升持续运营效率。',
+      },
     ],
-    contactHeading: '让 AI 成为业务增长的基础设施',
-    contactIntro: '从场景洞察到落地执行，我们陪伴企业构建可持续的 AI 能力与自动化体系。',
-    contactName: 'luke gao',
-    contactCardTitle: '联系我们',
-    contactCardMeta: '留下你的需求，我们会尽快回复。',
-    contactNameLabel: '称呼',
-    contactNamePlaceholder: '你的名字',
-    contactMethodLabel: '联系方式',
-    contactMethodPlaceholder: '邮箱 / 微信 / 电话',
-    contactMessageLabel: '留言',
-    contactMessagePlaceholder: '简单说说你想用 AI 解决什么问题',
-    contactSubmit: '发送留言',
-    contactSubject: '官网留言咨询',
+    contactHeading: '联系我们',
+    contactItems: [['业务咨询', email]],
   },
   en: {
     htmlLang: 'en',
-    title: 'ly origin',
+    title: 'LY ORIGIN',
     description:
-      'ly origin builds AI software, workflow automation, data and knowledge systems that bring AI capabilities into real business processes.',
-    brand: 'ly origin',
+      'ly origin creates with AI and brings AI-native methods into more industries, helping products and workflows become AI-powered.',
+    brand: '领弈禾元',
+    brandEn: 'LY ORIGIN',
     company: 'ly origin',
     navAria: 'Main navigation',
     nav: [
       ['partners', 'Partners'],
       ['products', 'Products'],
       ['services', 'Services'],
-      ['delivery', 'Process'],
+      ['team', 'Team'],
       ['about', 'Contact'],
     ],
     langLabel: '切换语言',
     langToggle: '中文',
     cta: 'Contact us',
     secondaryCta: 'View product system',
-    heroSubtitle: 'Bring AI into real business workflows',
+    heroSubtitle: 'Create with AI. Transform industries with AI.',
     heroDesc:
-      'We bring AI into different kinds of needs, from application development and content production to workflow automation, turning ideas into usable systems faster.',
-    partnersHeading: 'Connected to the model and cloud ecosystem',
+      'We are an AI-first creation company, using AI as the default way to build products, content, and operations, then bringing proven methods into more industries.',
+    partnersHeading: 'Models and Cloud',
     partnersIntro:
       'We integrate models, cloud services, databases, and deployment platforms around real business systems.',
     partnerRows: [
@@ -202,10 +258,8 @@ const translations = {
         summary:
           'AI helps CrazyFam turn gameplay ideas into shippable party content faster, reducing the cost of content iteration.',
         theme: 'crazyfam',
-        productUrl: '/crazyfam/index.html',
         appStoreUrl: 'https://apps.apple.com/us/app/crazyfam/id6754828243',
         privacyUrl: '/crazyfam/privacy-policy.html',
-        productCta: 'Open product site',
         appStoreCta: 'Download on the App Store',
         privacyCta: 'Privacy policy',
       },
@@ -216,10 +270,8 @@ const translations = {
         summary:
           'AI helps RoundBuddy turn training knowledge into executable plans faster, lowering the cost of session design.',
         theme: 'roundbuddy',
-        productUrl: '/roundbuddy/index.html',
         appStoreUrl: 'https://apps.apple.com/us/app/roundbuddy/id6779547962',
         privacyUrl: '/roundbuddy/privacy-policy.html',
-        productCta: 'Open product site',
         appStoreCta: 'Download on the App Store',
         privacyCta: 'Privacy policy',
       },
@@ -236,41 +288,96 @@ const translations = {
     ],
     servicesHeading: 'Services',
     servicesIntro:
-      'We combine models, business knowledge, and operational actions into AI services people can keep using.',
+      'From ideas, content, and knowledge to operational actions, we turn AI into daily team productivity.',
     services: [
-      ['AI Agents', 'Task-oriented agents for support, sales, operations, and internal collaboration.'],
-      ['Knowledge Base and RAG', 'Turn documents, product materials, and business know-how into searchable AI knowledge.'],
-      ['AI Support and Sales', 'Automate inquiries, lead follow-up, FAQ, recommendations, and presales conversations.'],
-      ['AIGC Content Production', 'Reliable generation workflows for product, social, ad, video, and brand content.'],
-      ['AI Commerce Globalization', 'AI-powered product content, inquiry replies, buyer communication, and multilingual ops.'],
-      ['Multi-model Integration', 'Combine ChatGPT, Gemini, Claude, DeepSeek, Doubao, and other models by scenario.'],
-      ['Data Insight Assistants', 'Make business data, feedback, and records explorable through conversational analysis.'],
-      ['AI Operations Automation', 'Use AI for content scheduling, customer touchpoints, follow-ups, and performance review.'],
+      {
+        title: 'Agent Workflows',
+        body: 'Make AI call tools, handle tasks, follow up on results, and enter real business workflows.',
+        signal: 'Action',
+      },
+      {
+        title: 'Knowledge Base and RAG',
+        body: 'Turn product materials, documents, and business know-how into searchable, updatable AI knowledge.',
+        signal: 'Knowledge',
+      },
+      {
+        title: 'AIGC Content Factory',
+        body: 'Build reliable generation and review workflows for product, social, ad, video, and brand content.',
+        signal: 'Content',
+      },
+      {
+        title: 'AI Support and Sales',
+        body: 'Automate inquiries, FAQ, recommendations, lead follow-up, and presales conversations.',
+        signal: 'Growth',
+      },
+      {
+        title: 'AI Commerce Globalization',
+        body: 'Generate product content, handle inquiries, support buyer communication, and multilingual ops.',
+        signal: 'Global',
+      },
+      {
+        title: 'Model Orchestration',
+        body: 'Combine ChatGPT, Gemini, Claude, DeepSeek, Doubao, and other models by scenario.',
+        signal: 'Models',
+      },
+      {
+        title: 'Data Insight Assistants',
+        body: 'Make business data, user feedback, and operation records explorable through conversation.',
+        signal: 'Insight',
+      },
+      {
+        title: 'Multimodal Asset Production',
+        body: 'Use AI to create images, copy, scripts, page assets, and product expression faster.',
+        signal: 'Visual',
+      },
+      {
+        title: 'Operations Automation',
+        body: 'Use AI for content scheduling, customer touchpoints, performance review, and daily operations.',
+        signal: 'Ops',
+      },
     ],
-    deliveryHeading: 'AI Service Path',
-    deliveryIntro:
-      'We help identify which scenarios deserve AI, then turn model capability into services that can be operated over time.',
-    deliverySteps: [
-      ['01', 'Find AI Opportunities', 'Identify where AI can create real leverage and separate useful scenarios from noise.'],
-      ['02', 'Compose Capabilities', 'Choose models, knowledge, tool use, and human collaboration patterns for the service.'],
-      ['03', 'Connect Knowledge and Flow', 'Bring product material, rules, customer questions, and operations into the AI loop.'],
-      ['04', 'Operate in Real Touchpoints', 'Put AI into support, content, sales, or operations where it can keep working.'],
-      ['05', 'Review and Upgrade', 'Improve prompts, knowledge, tools, and automation based on usage and feedback.'],
+    teamHeading: 'AI Employee Team',
+    teamIntro:
+      'We are operated by AI employees. Product, growth, design, engineering, and operations run through AI roles working together, while humans set direction and AI handles creation, execution, and iteration.',
+    teamMembers: [
+      {
+        name: 'Avery Chen',
+        role: 'Head of Growth',
+        label: 'Growth AI',
+        avatar: '/team/marketing-avatar.png',
+        summary: 'Uses AI to create content, read channel feedback, and test messaging so marketing loops move faster.',
+      },
+      {
+        name: 'Maya Lin',
+        role: 'Product Manager',
+        label: 'Product AI',
+        avatar: '/team/pm-avatar.png',
+        summary: 'Uses AI to break down requirements, map user journeys, and generate prototypes for faster validation.',
+      },
+      {
+        name: 'Jordan Park',
+        role: 'Systems Engineer',
+        label: 'Build AI',
+        avatar: '/team/engineering-avatar.png',
+        summary: 'Connects models, knowledge bases, tool calling, and automation flows into real product systems.',
+      },
+      {
+        name: 'Sofia Reyes',
+        role: 'Experience Designer',
+        label: 'Design AI',
+        avatar: '/team/design-avatar.png',
+        summary: 'Uses AIGC to create visual directions, interface assets, and product expression closer to launch quality.',
+      },
+      {
+        name: 'Marcus Reed',
+        role: 'Operations Lead',
+        label: 'Ops AI',
+        avatar: '/team/operations-avatar.png',
+        summary: 'Uses AI collaboration for support, content scheduling, data review, and lead follow-up.',
+      },
     ],
-    contactHeading: 'Make AI business infrastructure',
-    contactIntro:
-      'From scenario discovery to production execution, we help companies build sustainable AI and automation capabilities.',
-    contactName: 'luke gao',
-    contactCardTitle: 'Contact us',
-    contactCardMeta: 'Leave your request and we will get back to you soon.',
-    contactNameLabel: 'Name',
-    contactNamePlaceholder: 'Your name',
-    contactMethodLabel: 'Contact',
-    contactMethodPlaceholder: 'Email / WeChat / phone',
-    contactMessageLabel: 'Message',
-    contactMessagePlaceholder: 'Tell us what you want AI to help with',
-    contactSubmit: 'Send message',
-    contactSubject: 'Website inquiry',
+    contactHeading: 'Contact us',
+    contactItems: [['Business inquiry', email]],
   },
 }
 
@@ -409,7 +516,11 @@ function PartnerCarousel({ rows }) {
   )
 }
 
-function ProductShowcase({ products }) {
+function ProductShowcase({ products, language }) {
+  function getPrivacyUrl(url) {
+    return `${url}?lang=${language}`
+  }
+
   return (
     <div className="product-showcase">
       {products.map((product) => (
@@ -422,21 +533,27 @@ function ProductShowcase({ products }) {
             </div>
             <p>{product.summary}</p>
           </div>
-          <div className="product-link-row">
-            <a className="product-open" href={product.productUrl}>
-              {product.productCta}
-              <Arrow />
-            </a>
-            {product.privacyUrl ? (
-              <a className="product-privacy-link" href={product.privacyUrl}>
-                {product.privacyCta}
+          {product.productUrl ? (
+            <div className="product-link-row">
+              <a className="product-open" href={product.productUrl}>
+                {product.productCta}
+                <Arrow />
               </a>
-            ) : null}
-          </div>
-          {product.appStoreUrl ? (
-            <a className="app-store-badge" href={product.appStoreUrl} aria-label={product.appStoreCta}>
-              <img src="/download-on-app-store.svg" alt="" />
-            </a>
+            </div>
+          ) : null}
+          {(product.appStoreUrl || product.privacyUrl) ? (
+            <div className="product-download-row">
+              {product.appStoreUrl ? (
+                <a className="app-store-badge" href={product.appStoreUrl} aria-label={product.appStoreCta}>
+                  <img src="/download-on-app-store.svg" alt="" />
+                </a>
+              ) : null}
+              {product.privacyUrl ? (
+                <a className="product-privacy-link" href={getPrivacyUrl(product.privacyUrl)}>
+                  {product.privacyCta}
+                </a>
+              ) : null}
+            </div>
           ) : null}
         </article>
       ))}
@@ -444,18 +561,54 @@ function ProductShowcase({ products }) {
   )
 }
 
-function DeliveryFlow({ steps }) {
+function TeamSection({ members }) {
   return (
-    <div className="delivery-flow">
-      {steps.map(([number, title, body]) => (
-        <article key={number}>
-          <span>{number}</span>
-          <div>
-            <h3>{title}</h3>
-            <p>{body}</p>
+    <div className="team-grid">
+      {members.map((member) => (
+        <article className="team-card" key={member.name}>
+          <div className="team-card-top">
+            <img className="team-avatar" src={member.avatar} alt="" loading="lazy" />
           </div>
+          <div>
+            <h3>{member.name}</h3>
+          </div>
+          <strong>{member.role}</strong>
         </article>
       ))}
+    </div>
+  )
+}
+
+function ServicesMatrix({ services }) {
+  const featuredServices = services.slice(0, 3)
+  const compactServices = services.slice(3)
+
+  return (
+    <div className="services-matrix">
+      <div className="service-feature-row">
+        {featuredServices.map((service, index) => (
+          <article className="service-card service-card-feature" key={service.title}>
+            <span className="service-index">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{service.title}</h3>
+              <p>{service.body}</p>
+            </div>
+            <strong>{service.signal}</strong>
+          </article>
+        ))}
+      </div>
+      <div className="service-compact-grid">
+        {compactServices.map((service, index) => (
+          <article className="service-card service-card-compact" key={service.title}>
+            <span className="service-index">{String(index + 4).padStart(2, '0')}</span>
+            <div>
+              <h3>{service.title}</h3>
+              <p>{service.body}</p>
+            </div>
+            <strong>{service.signal}</strong>
+          </article>
+        ))}
+      </div>
     </div>
   )
 }
@@ -465,9 +618,35 @@ function NetworkField() {
 }
 
 function App() {
-  const [language, setLanguage] = useState('zh')
+  const [language, setLanguage] = useState(() => {
+    const savedLanguage = window.localStorage.getItem(languageStorageKey)
+
+    return savedLanguage === 'en' || savedLanguage === 'zh' ? savedLanguage : 'zh'
+  })
+  const [typedLength, setTypedLength] = useState(0)
   const copy = translations[language]
   const nextLanguage = language === 'zh' ? 'en' : 'zh'
+  const heroTitleParts = useMemo(
+    () =>
+      language === 'zh'
+        ? [
+            ['以\u00a0', false],
+            ['AI', true],
+            ['\u00a0创造', false],
+            ['\n让\u00a0', false],
+            ['AI', true],
+            ['\u00a0赋能', false],
+          ]
+        : [
+            ['Create with\u00a0', false],
+            ['AI', true],
+            ['.\nTransform industries\nwith\u00a0', false],
+            ['AI', true],
+            ['.', false],
+          ],
+    [language],
+  )
+  const heroTitleText = heroTitleParts.map(([text]) => text).join('')
 
   function handleSectionPointerMove(event) {
     const rect = event.currentTarget.getBoundingClientRect()
@@ -487,31 +666,152 @@ function App() {
     event.currentTarget.style.setProperty('--py', '50%')
   }
 
-  function handleContactSubmit(event) {
-    event.preventDefault()
-
-    const form = new FormData(event.currentTarget)
-    const name = form.get('name')?.toString().trim()
-    const contact = form.get('contact')?.toString().trim()
-    const message = form.get('message')?.toString().trim()
-    const body = [
-      `${copy.contactNameLabel}: ${name}`,
-      `${copy.contactMethodLabel}: ${contact}`,
-      '',
-      `${copy.contactMessageLabel}:`,
-      message,
-    ].join('\n')
-
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(copy.contactSubject)}&body=${encodeURIComponent(body)}`
-  }
-
   useEffect(() => {
     document.documentElement.lang = copy.htmlLang
+    window.localStorage.setItem(languageStorageKey, language)
     document.title = copy.title
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute('content', copy.description)
-  }, [copy])
+  }, [copy, language])
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let typingTimer
+    const prefixLength = heroTitleParts[0][0].length
+    const accentEndLength = prefixLength + heroTitleParts[1][0].length
+    const firstLineEndLength = heroTitleText.includes('\n')
+      ? heroTitleText.indexOf('\n')
+      : accentEndLength
+    const secondAccentEndLength =
+      language === 'zh'
+        ? heroTitleParts.slice(0, 5).reduce((length, [text]) => length + text.length, 0)
+        : heroTitleParts.slice(0, 4).reduce((length, [text]) => length + text.length, 0)
+
+    const startDelay = window.setTimeout(() => {
+      if (reduceMotion) {
+        setTypedLength(heroTitleText.length)
+        return
+      }
+
+      setTypedLength(0)
+
+      function typeNext(currentLength) {
+        if (currentLength >= heroTitleText.length) {
+          return
+        }
+
+        const nextLength = currentLength + 1
+        setTypedLength(nextLength)
+
+        let delay = 38
+
+        if (nextLength === firstLineEndLength) {
+          delay = language === 'zh' ? 480 : 260
+        } else if (nextLength === accentEndLength || nextLength === secondAccentEndLength) {
+          delay = 180
+        } else if (nextLength > firstLineEndLength) {
+          delay = language === 'zh' ? 112 : 54
+        } else if (nextLength > prefixLength) {
+          delay = 64
+        }
+
+        typingTimer = window.setTimeout(() => typeNext(nextLength), delay)
+      }
+
+      typingTimer = window.setTimeout(() => typeNext(0), 80)
+    }, 180)
+
+    return () => {
+      window.clearTimeout(startDelay)
+      window.clearTimeout(typingTimer)
+    }
+  }, [heroTitleParts, heroTitleText, language])
+
+  function renderTypedTitle() {
+    if (language === 'zh') {
+      const lineConfigs = [
+        ['以', 'AI', '创造'],
+        ['让', 'AI', '赋能'],
+      ]
+      const visibleLines = heroTitleText.slice(0, typedLength).split('\n')
+
+      return visibleLines.map((lineText, index) => {
+        const [leftText, accentText] = lineConfigs[index] ?? ['', '', '']
+        const compactText = lineText.replaceAll('\u00a0', '')
+        const leftVisible = compactText.slice(0, leftText.length)
+        const accentVisible = compactText.slice(leftText.length, leftText.length + accentText.length)
+        const rightVisible = compactText.slice(leftText.length + accentText.length)
+        const isActiveLine = index === visibleLines.length - 1
+        const activeSegment =
+          compactText.length <= leftText.length
+            ? 'left'
+            : compactText.length <= leftText.length + accentText.length
+              ? 'accent'
+              : 'right'
+        const cursor = isActiveLine ? <span className="typing-cursor" aria-hidden="true" /> : null
+
+        return (
+          <span className="hero-title-line hero-title-line-zh" key={index}>
+            <span className="hero-title-left">
+              {leftVisible}
+              {activeSegment === 'left' ? cursor : null}
+            </span>
+            <em className="hero-title-ai">
+              {accentVisible}
+              {activeSegment === 'accent' ? cursor : null}
+            </em>
+            <span className="hero-title-right">
+              {rightVisible}
+              {activeSegment === 'right' ? cursor : null}
+            </span>
+          </span>
+        )
+      })
+    }
+
+    let remainingLength = typedLength
+    const renderedParts = heroTitleParts.map(([text, isAccent], index) => {
+      const visibleText = text.slice(0, Math.max(0, remainingLength))
+      remainingLength -= text.length
+
+      return { index, isAccent, visibleText }
+    })
+    const lines = [[]]
+
+    renderedParts.forEach(({ index, isAccent, visibleText }) => {
+      if (!visibleText) {
+        return
+      }
+
+      const segments = visibleText.split('\n')
+
+      segments.forEach((segment, segmentIndex) => {
+        if (segmentIndex > 0) {
+          lines.push([])
+        }
+
+        if (!segment) {
+          return
+        }
+
+        lines[lines.length - 1].push(
+          isAccent ? (
+            <em key={`${index}-${segmentIndex}`}>{segment}</em>
+          ) : (
+            <span key={`${index}-${segmentIndex}`}>{segment}</span>
+          ),
+        )
+      })
+    })
+
+    return lines.map((line, index) => (
+      <span className="hero-title-line" key={index}>
+        {line}
+        {index === lines.length - 1 ? <span className="typing-cursor" aria-hidden="true" /> : null}
+      </span>
+    ))
+  }
 
   return (
     <main>
@@ -523,7 +823,17 @@ function App() {
       >
         <header className="site-header">
           <a className="brand" href="#top" aria-label={copy.company}>
-            {copy.brand}
+            <span className="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 120 72">
+                <path className="logo-line logo-line-outer" d="M109 36 L108.58 32.38 L107.33 29 L105.27 26.1 L102.44 23.88 L98.87 22.48 L94.65 22 L89.83 22.48 L84.5 23.88 L78.75 26.1 L72.68 29 L66.4 32.38 L60 36 L53.6 39.62 L47.32 43 L41.25 45.9 L35.5 48.12 L30.17 49.52 L25.35 50 L21.13 49.52 L17.56 48.12 L14.73 45.9 L12.67 43 L11.42 39.62 L11 36 L11.42 32.38 L12.67 29 L14.73 26.1 L17.56 23.88 L21.13 22.48 L25.35 22 L30.17 22.48 L35.5 23.88 L41.25 26.1 L47.32 29 L53.6 32.38 L60 36 L66.4 39.62 L72.68 43 L78.75 45.9 L84.5 48.12 L89.83 49.52 L94.65 50 L98.87 49.52 L102.44 48.12 L105.27 45.9 L107.33 43 L108.58 39.62 L109 36 Z" />
+                <path className="logo-line logo-line-middle" d="M100 36 L99.66 33.28 L98.64 30.75 L96.96 28.58 L94.64 26.91 L91.73 25.86 L88.28 25.5 L84.35 25.86 L80 26.91 L75.31 28.58 L70.35 30.75 L65.22 33.28 L60 36 L54.78 38.72 L49.65 41.25 L44.69 43.42 L40 45.09 L35.65 46.14 L31.72 46.5 L28.27 46.14 L25.36 45.09 L23.04 43.42 L21.36 41.25 L20.34 38.72 L20 36 L20.34 33.28 L21.36 30.75 L23.04 28.58 L25.36 26.91 L28.27 25.86 L31.72 25.5 L35.65 25.86 L40 26.91 L44.69 28.58 L49.65 30.75 L54.78 33.28 L60 36 L65.22 38.72 L70.35 41.25 L75.31 43.42 L80 45.09 L84.35 46.14 L88.28 46.5 L91.73 46.14 L94.64 45.09 L96.96 43.42 L98.64 41.25 L99.66 38.72 L100 36 Z" />
+                <path className="logo-line logo-line-inner" d="M91 36 L90.73 34.19 L89.94 32.5 L88.64 31.05 L86.85 29.94 L84.59 29.24 L81.92 29 L78.87 29.24 L75.5 29.94 L71.86 31.05 L68.02 32.5 L64.05 34.19 L60 36 L55.95 37.81 L51.98 39.5 L48.14 40.95 L44.5 42.06 L41.13 42.76 L38.08 43 L35.41 42.76 L33.15 42.06 L31.36 40.95 L30.06 39.5 L29.27 37.81 L29 36 L29.27 34.19 L30.06 32.5 L31.36 31.05 L33.15 29.94 L35.41 29.24 L38.08 29 L41.13 29.24 L44.5 29.94 L48.14 31.05 L51.98 32.5 L55.95 34.19 L60 36 L64.05 37.81 L68.02 39.5 L71.86 40.95 L75.5 42.06 L78.87 42.76 L81.92 43 L84.59 42.76 L86.85 42.06 L88.64 40.95 L89.94 39.5 L90.73 37.81 L91 36 Z" />
+              </svg>
+            </span>
+            <span className="brand-lockup">
+              <span>{copy.brandEn}</span>
+              <strong>{copy.brand}</strong>
+            </span>
           </a>
           <nav aria-label={copy.navAria}>
             {copy.nav.map(([id, label]) => (
@@ -547,16 +857,8 @@ function App() {
         <div className="hero-layout">
           <NetworkField />
           <div className="hero-copy">
-            <h1>
-              {language === 'zh' ? (
-                <>
-                  把 <em>AI 能力</em> 落到业务流程里
-                </>
-              ) : (
-                <>
-                  Bring <em>AI capabilities</em> into real business workflows
-                </>
-              )}
+            <h1 className={typedLength >= heroTitleText.length ? 'typing-complete' : undefined}>
+              {renderTypedTitle()}
             </h1>
             <p className="hero-desc">{copy.heroDesc}</p>
             <div className="hero-actions">
@@ -586,7 +888,7 @@ function App() {
         onPointerLeave={handleSectionPointerLeave}
       >
         <SectionHeader title={copy.productsHeading} intro={copy.productsIntro} />
-        <ProductShowcase products={copy.products} />
+        <ProductShowcase products={copy.products} language={language} />
       </section>
 
       <section
@@ -596,25 +898,17 @@ function App() {
         onPointerLeave={handleSectionPointerLeave}
       >
         <SectionHeader title={copy.servicesHeading} intro={copy.servicesIntro} />
-        <div className="split-list">
-          {copy.services.map(([title, body], index) => (
-            <article key={title}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </article>
-          ))}
-        </div>
+        <ServicesMatrix services={copy.services} />
       </section>
 
       <section
-        className="section delivery-section"
-        id="delivery"
+        className="section team-section"
+        id="team"
         onPointerMove={handleSectionPointerMove}
         onPointerLeave={handleSectionPointerLeave}
       >
-        <SectionHeader title={copy.deliveryHeading} intro={copy.deliveryIntro} />
-        <DeliveryFlow steps={copy.deliverySteps} />
+        <SectionHeader title={copy.teamHeading} intro={copy.teamIntro} />
+        <TeamSection members={copy.teamMembers} />
       </section>
 
       <section
@@ -623,32 +917,14 @@ function App() {
         onPointerMove={handleSectionPointerMove}
         onPointerLeave={handleSectionPointerLeave}
       >
-        <div>
-          <h2>{copy.contactHeading}</h2>
-          <p>{copy.contactIntro}</p>
+        <div className="contact-links">
+          {copy.contactItems.map(([label, value]) => (
+            <article key={label}>
+              <h3>{label}</h3>
+              <a href={`mailto:${value}`}>{value}</a>
+            </article>
+          ))}
         </div>
-        <form className="contact-card" onSubmit={handleContactSubmit}>
-          <div className="contact-card-head">
-            <strong>{copy.contactCardTitle}</strong>
-            <span>{copy.contactCardMeta}</span>
-          </div>
-          <label>
-            <span>{copy.contactNameLabel}</span>
-            <input name="name" type="text" placeholder={copy.contactNamePlaceholder} required />
-          </label>
-          <label>
-            <span>{copy.contactMethodLabel}</span>
-            <input name="contact" type="text" placeholder={copy.contactMethodPlaceholder} required />
-          </label>
-          <label>
-            <span>{copy.contactMessageLabel}</span>
-            <textarea name="message" rows="3" placeholder={copy.contactMessagePlaceholder} required />
-          </label>
-          <button className="primary-button" type="submit">
-            {copy.contactSubmit}
-            <Arrow />
-          </button>
-        </form>
       </section>
     </main>
   )
