@@ -24,11 +24,8 @@ npm run build
 这个项目可以部署到 GitHub Pages。仓库内已经包含：
 
 - `.github/workflows/deploy.yml`：推送到 `main` 分支后自动构建并发布 Pages。
+- `public/CNAME`：自定义域名配置，当前写的是 `ly-origin.com`。
 
-在 GitHub 仓库里进入 `Settings -> Pages`，把 `Source` 设置为 `GitHub Actions`。部署完成后，默认访问地址是：
+在 GitHub 仓库里进入 `Settings -> Pages`，把 `Source` 设置为 `GitHub Actions`。部署完成后，默认访问地址是 `https://ly-origin.com/`。
 
-```text
-https://lukegao55.github.io/ly-origin/
-```
-
-如果要绑定自定义域名，请添加 `public/CNAME` 并写入完整域名，同时把 `vite.config.js` 里的 `base` 改回 `/`。
+如果要取消自定义域名并改用 `https://lukegao55.github.io/ly-origin/`，请删除 `public/CNAME`，并把 `vite.config.js` 里的 `base` 改成 `/ly-origin/`。
