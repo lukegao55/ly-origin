@@ -1425,7 +1425,7 @@ nav a:hover {
 
   .team-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 12px;
   }
 
   .team-report-grid {
@@ -1434,30 +1434,75 @@ nav a:hover {
 
   .team-card {
     min-height: 0;
-    padding: 20px;
+    grid-template-columns: 108px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 18px;
+    row-gap: 8px;
+    padding: 18px;
+    border-radius: 18px;
   }
 
   .team-lead-card {
-    grid-template-columns: 1fr;
+    width: 100%;
+    grid-template-columns: 108px minmax(0, 1fr);
+    justify-items: start;
     gap: 18px;
     min-height: 0;
-    padding: 20px;
+    padding: 18px;
+    border-radius: 18px;
+    text-align: left;
   }
 
   .team-lead-avatar {
-    width: 118px;
-    height: 118px;
-    border-radius: 26px;
+    width: 108px;
+    height: 108px;
+    border-radius: 24px;
   }
 
   .team-lead-card h3 {
-    font-size: clamp(30px, 10vw, 44px);
+    font-size: clamp(30px, 9vw, 40px);
+  }
+
+  .team-card-top {
+    grid-row: 1 / 3;
   }
 
   .team-avatar {
-    width: 104px;
-    height: 104px;
+    width: 108px;
+    height: 108px;
     border-radius: 24px;
+  }
+
+  .team-card h3 {
+    align-self: end;
+    font-size: clamp(24px, 7.4vw, 32px);
+    line-height: 1;
+  }
+
+  .team-card strong {
+    align-self: start;
+  }
+
+  .team-card strong,
+  .team-lead-card strong {
+    font-size: 13px;
+  }
+
+  @media (max-width: 360px) {
+    .team-card,
+    .team-lead-card {
+      grid-template-columns: 96px minmax(0, 1fr);
+      column-gap: 14px;
+      padding: 16px;
+    }
+
+    .team-avatar,
+    .team-lead-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+    }
   }
 
 }
