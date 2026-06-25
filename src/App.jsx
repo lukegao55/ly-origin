@@ -23,10 +23,10 @@ const translations = {
     htmlLang: 'zh-CN',
     title: '领弈禾元',
     description:
-      '深圳领弈禾元科技有限公司用 AI 创造产品，并把 AI 方法带入更多行业场景，帮助业务完成 AI 化升级。',
+      '领弈禾元用 AI 创造产品，并把 AI 方法带入更多行业场景，帮助业务完成 AI 化升级。',
     brand: '领弈禾元',
     brandEn: 'LY ORIGIN',
-    company: '深圳领弈禾元科技有限公司',
+    company: '领弈禾元',
     navAria: '主导航',
     nav: [
       ['partners', '生态'],
