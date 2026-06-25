@@ -156,42 +156,55 @@ const translations = {
     ],
     teamHeading: 'AI 员工团队',
     teamIntro:
-      '我们是一家由 AI 员工驱动的公司。产品、增长、设计、工程和运营都由 AI 角色协同运作，人类负责方向判断，AI 负责持续创造、执行和迭代。',
+      'CEO & CTO 负责方向、产品判断和技术架构，下面由 AI 员工协同承担增长、产品、工程、设计和运营，让公司以 AI 方式持续运作。',
+    teamLead: {
+      name: 'Luke',
+      role: 'CEO & CTO',
+      avatar: '/team/founder-avatar.png',
+      summary: '定义公司方向、产品策略和技术架构，管理 AI 员工完成创造、执行和迭代。',
+    },
     teamMembers: [
       {
-        name: 'Avery Chen',
-        role: '增长负责人',
+        name: 'Aria Chen',
+        role: '增长策略',
         label: 'Growth AI',
         avatar: '/team/marketing-avatar.png',
         summary: '用 AI 生成内容、分析渠道反馈和测试传播方向，让市场动作更快形成闭环。',
       },
       {
-        name: 'Maya Lin',
-        role: '产品经理',
+        name: 'Kira Lin',
+        role: '产品策划',
         label: 'Product AI',
         avatar: '/team/pm-avatar.png',
         summary: '用 AI 拆解需求、梳理用户路径和生成原型，把想法更快转成可验证的产品方案。',
       },
       {
-        name: 'Jordan Park',
-        role: '系统工程师',
+        name: 'Noah Park',
+        role: '系统架构',
         label: 'Build AI',
         avatar: '/team/engineering-avatar.png',
         summary: '把模型、知识库、工具调用和自动化流程接入真实产品，让 AI 能进入业务链路。',
       },
       {
         name: 'Sofia Reyes',
-        role: '体验设计师',
+        role: '体验设计',
         label: 'Design AI',
         avatar: '/team/design-avatar.png',
         summary: '用 AIGC 生成视觉方向、界面资产和表达方案，让产品体验更快接近可上线状态。',
       },
       {
-        name: 'Marcus Reed',
-        role: '运营自动化负责人',
+        name: 'Ethan Reed',
+        role: '运营自动化',
         label: 'Ops AI',
         avatar: '/team/operations-avatar.png',
         summary: '把客服、内容排期、数据复盘和线索跟进交给 AI 协作，提升持续运营效率。',
+      },
+      {
+        name: 'Riya Shah',
+        role: '知识系统',
+        label: 'Knowledge AI',
+        avatar: '/team/knowledge-avatar.png',
+        summary: '把文档、数据和业务经验沉淀成可检索、可调用、可持续更新的知识能力。',
       },
     ],
     contactHeading: '联系我们',
@@ -338,42 +351,55 @@ const translations = {
     ],
     teamHeading: 'AI Employee Team',
     teamIntro:
-      'We are operated by AI employees. Product, growth, design, engineering, and operations run through AI roles working together, while humans set direction and AI handles creation, execution, and iteration.',
+      'The CEO & CTO sets direction, product judgment, and technical architecture, while AI employees run growth, product, engineering, design, and operations.',
+    teamLead: {
+      name: 'Luke',
+      role: 'CEO & CTO',
+      avatar: '/team/founder-avatar.png',
+      summary: 'Sets company direction, product strategy, and technical architecture while managing AI employees for creation, execution, and iteration.',
+    },
     teamMembers: [
       {
-        name: 'Avery Chen',
-        role: 'Head of Growth',
+        name: 'Aria Chen',
+        role: 'Growth Strategy',
         label: 'Growth AI',
         avatar: '/team/marketing-avatar.png',
         summary: 'Uses AI to create content, read channel feedback, and test messaging so marketing loops move faster.',
       },
       {
-        name: 'Maya Lin',
-        role: 'Product Manager',
+        name: 'Kira Lin',
+        role: 'Product Planning',
         label: 'Product AI',
         avatar: '/team/pm-avatar.png',
         summary: 'Uses AI to break down requirements, map user journeys, and generate prototypes for faster validation.',
       },
       {
-        name: 'Jordan Park',
-        role: 'Systems Engineer',
+        name: 'Noah Park',
+        role: 'System Architecture',
         label: 'Build AI',
         avatar: '/team/engineering-avatar.png',
         summary: 'Connects models, knowledge bases, tool calling, and automation flows into real product systems.',
       },
       {
         name: 'Sofia Reyes',
-        role: 'Experience Designer',
+        role: 'Experience Design',
         label: 'Design AI',
         avatar: '/team/design-avatar.png',
         summary: 'Uses AIGC to create visual directions, interface assets, and product expression closer to launch quality.',
       },
       {
-        name: 'Marcus Reed',
-        role: 'Operations Lead',
+        name: 'Ethan Reed',
+        role: 'Operations Automation',
         label: 'Ops AI',
         avatar: '/team/operations-avatar.png',
         summary: 'Uses AI collaboration for support, content scheduling, data review, and lead follow-up.',
+      },
+      {
+        name: 'Riya Shah',
+        role: 'Knowledge Systems',
+        label: 'Knowledge AI',
+        avatar: '/team/knowledge-avatar.png',
+        summary: 'Turns documents, data, and operating experience into searchable, callable, and continuously updated knowledge systems.',
       },
     ],
     contactHeading: 'Contact us',
@@ -561,20 +587,31 @@ function ProductShowcase({ products, language }) {
   )
 }
 
-function TeamSection({ members }) {
+function TeamSection({ lead, members }) {
   return (
-    <div className="team-grid">
-      {members.map((member) => (
-        <article className="team-card" key={member.name}>
-          <div className="team-card-top">
-            <img className="team-avatar" src={member.avatar} alt="" loading="lazy" />
-          </div>
-          <div>
-            <h3>{member.name}</h3>
-          </div>
-          <strong>{member.role}</strong>
-        </article>
-      ))}
+    <div className="team-stack-layout">
+      <article className="team-lead-card">
+        <img className="team-lead-avatar" src={lead.avatar} alt="" loading="lazy" />
+        <div>
+          <h3>{lead.name}</h3>
+          <strong>{lead.role}</strong>
+        </div>
+      </article>
+      <div className="team-report-grid">
+        <div className="team-grid">
+          {members.map((member) => (
+            <article className="team-card" key={member.name}>
+              <div className="team-card-top">
+                <img className="team-avatar" src={member.avatar} alt="" loading="lazy" />
+              </div>
+              <div>
+                <h3>{member.name}</h3>
+              </div>
+              <strong>{member.role}</strong>
+            </article>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -908,7 +945,7 @@ function App() {
         onPointerLeave={handleSectionPointerLeave}
       >
         <SectionHeader title={copy.teamHeading} intro={copy.teamIntro} />
-        <TeamSection members={copy.teamMembers} />
+        <TeamSection lead={copy.teamLead} members={copy.teamMembers} />
       </section>
 
       <section
